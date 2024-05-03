@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <!-- Lägg till Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+
+<div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-8 text-center">Välkommen till minaRecept</h1>
+
+    <p class="text-center mb-4">Har du ett konto?</p>
+    <a th:href="@{/login}" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-md mb-4">Logga in</a>
+
+    <p class="text-center mb-4">Vill du skapa ett konto?</p>
+    <a th:href="@{/register}" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-md">Registrera dig här</a>
+</div>
+
+</body>
+</html>
