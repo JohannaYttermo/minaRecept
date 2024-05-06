@@ -1,4 +1,4 @@
-package com.example.minaRecept.models;
+package com.johanna.minaRecept.services;
 
 public class UserEntityDetailsService {
 }

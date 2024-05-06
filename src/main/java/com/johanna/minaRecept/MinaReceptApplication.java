@@ -1,4 +1,4 @@
-package com.example.minaRecept;
+package com.johanna.minaRecept;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

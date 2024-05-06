@@ -1,4 +1,4 @@
-package com.example.minaRecept.config;
+package com.johanna.minaRecept.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
