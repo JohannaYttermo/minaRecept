@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 public enum Role implements GrantedAuthority {
 
-    ROLE_USER("GET_POST"),
-    ROLE_ADMIN("GET_POST");
+    USER("GET_POST"),
+    ADMIN("GET_POST");
 
     private final String permissions;
 
@@ -40,7 +40,7 @@ public enum Role implements GrantedAuthority {
 
     public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + name()));
+        authorities.add(new SimpleGrantedAuthority(name()));
         authorities.addAll(splitPermissions());
         return authorities;
     }

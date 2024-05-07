@@ -21,7 +21,8 @@
         <label for="password" class="block mb-4 text-purple-900">Lösenord</label>
         <input type="password" th:field="*{password}" placeholder="Lösenord..." id="password" class="w-full border-gray-300 rounded-md p-2 mb-4">
 
-        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md mb-4">Skapa konto</button>
+        <!-- Lägg till hover-effekten på knappen -->
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md mb-4 hover-scale">Skapa konto</button>
 
         <p th:if="${#fields.hasErrors('username')}" class="text-red-500 mb-2">
             <span th:errors="*{username}"></span>
