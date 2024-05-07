@@ -13,6 +13,8 @@ public class RecipeEntity {
     private String title;
     private String ingredients;
 
+    public RecipeEntity() {}
+
     public RecipeEntity(Long id, String title, String ingredients) {
         this.id = id;
         this.title = title;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -41,7 +42,6 @@ public class UserController {
 
     }
 
-
     @PostMapping("/register")
     public String registerUser(
             @Valid UserEntity userEntity,
@@ -67,12 +67,20 @@ public class UserController {
         // Spara användaren i databasen
         userRepository.save(userEntity);
 
-        // Skicka meddelande till login-sidan
+        // Skicka meddelande till login-sidan endast om användaren just har registrerats
         redirectAttributes.addFlashAttribute("registrationSuccess", true);
 
         // Omdirigera till login-sidan
         return "redirect:/login";
     }
+
+    @GetMapping("/profile")
+    public String showProfilePage(Principal principal, Model model) {
+        String username = principal.getName(); // Hämta användarnamnet från inloggad användare
+        model.addAttribute("username", username); // Lägg till användaren i modellen för att visa i profilsidan
+        return "profile";
+    }
+
 
 
 

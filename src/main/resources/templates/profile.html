@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Välkommen</title>
+    <!-- Lägg till Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-to-br from-pink-200 to-purple-400 flex flex-col items-center justify-center min-h-screen">
+
+<div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-8 text-center text-purple-900">Välkommen <span th:text="${username}"></span>!</h1>
+    <p class="text-center">Här kan du lägga till och söka efter dina recept</p>
+
+    <!-- Sökruta -->
+    <form class="mt-8 mb-4">
+        <input type="text" placeholder="Sök recept..." class="w-full border-gray-300 rounded-md p-2">
+        <button type="submit" class="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">Sök</button>
+    </form>
+
+    <!-- Lista över recept -->
+    <div class="border-t border-gray-300 py-4">
+        <h2 class="text-xl font-bold mb-2">Dina recept</h2>
+        <!-- Här kan du lägga till dynamisk innehåll för att visa användarens recept -->
+        <div class="flex flex-col space-y-4">
+            <div class="bg-gray-50 p-4 rounded-md shadow-md">
+                <h3 class="text-lg font-semibold">Recept 1</h3>
+                <p>Beskrivning av recept 1...</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-md shadow-md">
+                <h3 class="text-lg font-semibold">Recept 2</h3>
+                <p>Beskrivning av recept 2...</p>
+            </div>
+            <!-- Lägg till fler recept här -->
+        </div>
+    </div>
+
+    <!-- Logga ut länk -->
+    <a th:href="@{/logout-page}" class="block mt-4 text-center text-blue-500">Logga ut</a>
+</div>
+
+</body>
+
+</html>
+
+

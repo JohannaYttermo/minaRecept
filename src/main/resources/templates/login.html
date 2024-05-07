@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <!-- Lägg till Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
-<body>
-<h1>Login är detta </h1>
+
+<body class="bg-gradient-to-br from-pink-200 to-purple-400 flex flex-col items-center justify-center min-h-screen">
+
+<div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-8 text-center text-purple-900">Logga in</h1>
+
+    <!-- Bekräftelsemeddelande efter registrering -->
+    <div th:if="${registrationSuccess}" class="mb-6">
+        <p class="text-center text-green-500 font-semibold">Du har nu registrerats! Logga in nedan.</p>
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <label for="username" class="block mb-4 text-purple-900">Användarnamn</label>
+        <input name="username" type="text" placeholder="Användarnamn..." id="username" class="w-full border-gray-300 rounded-md p-2 mb-4" required>
+
+        <label for="password" class="block mb-4 text-purple-900">Lösenord</label>
+        <input name="password" placeholder="Lösenord..." type="password" id="password" class="w-full border-gray-300 rounded-md p-2 mb-4" required>
+
+        <label for="remember-me" class="block mb-4 text-purple-900">Kom ihåg mig</label>
+        <input name="remember-me" type="checkbox" id="remember-me" class="mb-4">
+
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md mb-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">Logga in</button>
+
+        <div th:if="${param.error}" class="text-red-500 mb-2">
+            <p th:text="${session.error}"></p>
+        </div>
+
+        <a th:href="@{/}" class="block text-center text-purple-600 hover:text-purple-700">Till startsidan</a>
+    </form>
+</div>
 
 </body>
+
 </html>
+
 
 
