@@ -14,7 +14,7 @@ public class AppSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorize -> authorize
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/","/home","/login", "/register").permitAll() // Tillåt åtkomst till startsida och registreringssida utan inloggning
                         .anyRequest().authenticated() // Alla andra begäranden kräver autentisering
                 )
@@ -26,8 +26,7 @@ public class AppSecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout") // Ange URL för utloggning
                         .permitAll()
-                )
-                .csrf().disable(); // Inaktivera CSRF-skydd för enkelhetens skull
+                );
 
         return http.build();
     }

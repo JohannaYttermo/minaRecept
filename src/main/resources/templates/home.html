@@ -9,16 +9,16 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+<body class="bg-gradient-to-br from-pink-200 to-purple-400 flex flex-col items-center justify-center min-h-screen">
 
 <div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
-    <h1 class="text-3xl font-bold mb-8 text-center">Välkommen till minaRecept</h1>
+    <h1 class="text-4xl font-bold mb-8 text-center text-purple-900">Välkommen till MinaRecept</h1>
 
-    <p class="text-center mb-4">Har du ett konto?</p>
-    <a th:href="@{/login}" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-md mb-4">Logga in</a>
+    <p class="text-lg text-center mb-4">Har du ett konto?</p>
+    <a th:href="@{/login}" class="block w-full text-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mb-4">Logga in</a>
 
-    <p class="text-center mb-4">Vill du skapa ett konto?</p>
-    <a th:href="@{/register}" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-md">Registrera dig här</a>
+    <p class="text-lg text-center mb-4">Skapa ett konto</p>
+    <a th:href="@{/register}" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">Bli medlem nu!</a>
 </div>
 
 </body>

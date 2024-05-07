@@ -1,11 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- Lägg till Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
-<body>
-<h1>Register page</h1>
+
+<body class="bg-gradient-to-br from-pink-200 to-purple-400 flex flex-col items-center justify-center min-h-screen">
+
+<div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-8 text-center text-purple-900">Registrera dig</h1>
+    <form th:action="@{/register}" th:object="${userEntity}" method="post">
+        <label for="username" class="block mb-4 text-purple-900">Användarnamn</label>
+        <input type="text" th:field="*{username}" placeholder="Användarnamn..." id="username" class="w-full border-gray-300 rounded-md p-2 mb-4">
+
+        <label for="password" class="block mb-4 text-purple-900">Lösenord</label>
+        <input type="password" th:field="*{password}" placeholder="Lösenord..." id="password" class="w-full border-gray-300 rounded-md p-2 mb-4">
+
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md mb-4">Skapa konto</button>
+
+        <p th:if="${#fields.hasErrors('username')}" class="text-red-500 mb-2">
+            <span th:errors="*{username}"></span>
+        </p>
+
+        <ul>
+            <li th:each="error : ${#fields.errors('password')}" th:text="${error}" class="text-red-500 mb-2"></li>
+        </ul>
+
+        <div th:if="${#fields.hasAnyErrors()}" class="text-red-500 mb-2">
+            <ul>
+                <li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li>
+            </ul>
+        </div>
+    </form>
+</div>
 
 </body>
+
 </html>
