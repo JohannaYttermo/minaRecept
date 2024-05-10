@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lägg till recept</title>
+    <!-- Lägg till Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-to-br from-pink-200 to-purple-400 flex flex-col items-center justify-center min-h-screen">
+
+<div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-8 text-center text-purple-900">Lägg till recept</h1>
+
+    <!-- Formulär för att lägga till recept -->
+    <form th:action="@{/add-recipe}" method="post">
+        <label for="title" class="block mb-4 text-purple-900">Titel</label>
+        <input name="title" type="text" placeholder="Titel..." id="title" class="w-full border-gray-300 rounded-md p-2 mb-4" required>
+
+        <label for="ingredients" class="block mb-4 text-purple-900">Ingredienser</label>
+        <textarea name="ingredients" placeholder="Ingredienser..." id="ingredients" class="w-full border-gray-300 rounded-md p-2 mb-4" required></textarea>
+
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md mb-4 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">Lägg till</button>
+    </form>
+
+    <!-- Tillbaka till profil-sida länk -->
+    <a th:href="@{/profile}" class="block text-center text-purple-600 hover:text-purple-700">Tillbaka till profilsidan</a>
+</div>
+
+</body>
+
+</html>

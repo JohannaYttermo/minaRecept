@@ -74,13 +74,12 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/user-profile")
     public String showProfilePage(Principal principal, Model model) {
         String username = principal.getName(); // Hämta användarnamnet från inloggad användare
         model.addAttribute("username", username); // Lägg till användaren i modellen för att visa i profilsidan
         return "profile";
     }
-
 
 
 

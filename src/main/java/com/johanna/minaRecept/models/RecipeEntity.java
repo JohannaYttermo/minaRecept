@@ -2,6 +2,9 @@ package com.johanna.minaRecept.models;
 
 import jakarta.persistence.*;
 
+import javax.validation.constraints.NotEmpty;
+
+
 @Entity
 @Table(name = "recipes")
 public class RecipeEntity {
@@ -10,13 +13,15 @@ public class RecipeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @NotEmpty(message = "Denna ruta får inte vara tom")
     private String title;
+    @NotEmpty(message = "Lägg till ingredienser")
     private String ingredients;
 
     public RecipeEntity() {}
 
-    public RecipeEntity(Long id, String title, String ingredients) {
-        this.id = id;
+    public RecipeEntity(String title, String ingredients) {
         this.title = title;
         this.ingredients = ingredients;
     }
