@@ -8,6 +8,10 @@
     <!-- Lägg till Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
+    <script th:inline="javascript">
+        /* Thymeleaf-variabler för att hålla reda på antalet ingrediensrutor */
+        var ingredientCount = 1;
+    </script>
 </head>
 
 <body class="bg-gradient-to-br from-pink-200 to-purple-400 flex flex-col items-center justify-center min-h-screen">
@@ -21,7 +25,13 @@
         <input name="title" type="text" placeholder="Titel..." id="title" class="w-full border-gray-300 rounded-md p-2 mb-4" required>
 
         <label for="ingredients" class="block mb-4 text-purple-900">Ingredienser</label>
-        <textarea name="ingredients" placeholder="Ingredienser..." id="ingredients" class="w-full border-gray-300 rounded-md p-2 mb-4" required></textarea>
+        <div id="ingredient-container">
+            <!-- Första ingrediensrutan -->
+            <textarea name="ingredients" placeholder="Ingredienser..." id="ingredients" class="w-full border-gray-300 rounded-md p-2 mb-4" required></textarea>
+        </div>
+
+        <button type="button" onclick="addIngredient()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md mb-4 transition duration-300 ease-in-out">Lägg till ingrediens</button>
+
 
         <label for="instructions" class="block mb-4 text-purple-900">Gör såhär</label>
         <textarea name="instructions" placeholder="Gör såhär..." id="instructions" class="w-full border-gray-300 rounded-md p-2 mb-4" required></textarea>
@@ -32,6 +42,20 @@
     <!-- Tillbaka till profil-sida länk -->
     <a th:href="@{/profile}" class="block text-center text-purple-600 hover:text-purple-700">Tillbaka till profilsidan</a>
 </div>
+
+<script th:inline="javascript">
+    /* JavaScript-funktion för att lägga till en ny ingrediensruta */
+    function addIngredient() {
+        var container = document.getElementById('ingredient-container');
+        var textarea = document.createElement('textarea');
+        textarea.name = 'ingredients[' + ingredientCount + ']';
+        textarea.placeholder = 'Lägg till ingrediens...';
+        textarea.className = 'w-full border-gray-300 rounded-md p-2 mb-4';
+        textarea.required = true;
+        container.appendChild(textarea);
+        ingredientCount++;
+    }
+</script>
 
 </body>
 

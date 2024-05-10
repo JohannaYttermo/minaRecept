@@ -6,10 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.johanna.minaRecept.models.RecipeEntity;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,13 +26,21 @@ public class RecipeController {
 
 
     @GetMapping("/add-recipe")
-    public String showAddRecipeForm() {
-
-        System.out.println("visar sidan att lägga till recept");
+    public String showAddRecipeForm(Model model) {
+        model.addAttribute("recipe", new RecipeEntity());
         return "add-recipe";
     }
 
+
     @PostMapping("/add-recipe")
+    public String saveRecipe(@ModelAttribute("recipe") RecipeEntity recipe) {
+        recipeRepository.save(recipe);
+        System.out.println("recept sparas i databas");
+        return "redirect:/profile";
+    }
+
+
+  /*  @PostMapping("/add-recipe")
     public String saveRecipe(@RequestParam String title, @RequestParam List<String> ingredients, @RequestParam String instructions) {
         RecipeEntity recipe;
         recipe = new RecipeEntity(title, ingredients, instructions);
@@ -43,7 +48,7 @@ public class RecipeController {
         System.out.println("recept sparas i databas");
         return "redirect:/profile";
     }
-
+*/
 
     @GetMapping("/profile")
     public String showProfile(Model model) {
@@ -67,6 +72,8 @@ public class RecipeController {
             return "error";
         }
     }
+
+
 }
 
 
