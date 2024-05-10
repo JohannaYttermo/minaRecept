@@ -23,18 +23,19 @@
     </form>
 
     <!-- Lista över recept -->
+    <!-- Lista över recept -->
     <div class="border-t border-gray-300 py-4">
         <h2 class="text-xl font-bold mb-2">Dina recept</h2>
         <!-- Loopa igenom och visa recept dynamiskt -->
         <div class="flex flex-col space-y-4">
             <!-- Loopa igenom recept här -->
             <div th:each="recipe : ${recipes}" class="bg-gray-50 p-4 rounded-md shadow-md">
-                <h3 class="text-lg font-semibold" th:text="${recipe.title}">Titel här</h3>
-                <p th:text="${recipe.ingredients}">Ingredienser här...</p>
+                <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="block text-lg font-semibold mb-2" th:text="${recipe.title}">Titel här</a>
             </div>
             <!-- Slut på loop -->
         </div>
     </div>
+
 
     <!-- Lägg till nytt recept knapp -->
     <button class="w-full mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="window.location.href='/add-recipe'">Lägg till nytt recept</button>
@@ -46,6 +47,8 @@
 </body>
 
 </html>
+
+
 
 
 

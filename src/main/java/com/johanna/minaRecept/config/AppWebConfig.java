@@ -17,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
             registry.addViewController("/login").setViewName("login");
             registry.addViewController("/profile").setViewName("profile");
             registry.addViewController("/add-recipe").setViewName("add-recipe");
+            registry.addViewController("/recipe-details").setViewName("recipe-details");
             registry.addViewController("/logout").setViewName("logout");
             registry.addViewController("/logout-page").setViewName("logout-page");
         }

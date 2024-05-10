@@ -3,6 +3,7 @@ package com.johanna.minaRecept.models;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 
 @Entity
@@ -13,17 +14,22 @@ public class RecipeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @NotEmpty(message = "Denna ruta får inte vara tom")
     private String title;
+
     @NotEmpty(message = "Lägg till ingredienser")
-    private String ingredients;
+    @ElementCollection
+    private List<String> ingredients;
+
+    @NotEmpty
+    private String instructions;
 
     public RecipeEntity() {}
 
-    public RecipeEntity(String title, String ingredients) {
+    public RecipeEntity(String title, List<String> ingredients, String instructions) {
         this.title = title;
         this.ingredients = ingredients;
+        this.instructions = instructions;
     }
 
     public Long getId() {
@@ -42,11 +48,19 @@ public class RecipeEntity {
         this.title = title;
     }
 
-    public String getIngredients() {
+    public @NotEmpty(message = "Lägg till ingredienser") List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(String ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 }

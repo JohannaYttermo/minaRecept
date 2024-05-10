@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.johanna.minaRecept.models.RecipeEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -33,13 +36,14 @@ public class RecipeController {
     }
 
     @PostMapping("/add-recipe")
-    public String saveRecipe(@RequestParam String title, @RequestParam String ingredients) {
+    public String saveRecipe(@RequestParam String title, @RequestParam List<String> ingredients, @RequestParam String instructions) {
         RecipeEntity recipe;
-        recipe = new RecipeEntity(title, ingredients);
+        recipe = new RecipeEntity(title, ingredients, instructions);
         recipeRepository.save(recipe);
         System.out.println("recept sparas i databas");
         return "redirect:/profile";
     }
+
 
     @GetMapping("/profile")
     public String showProfile(Model model) {
@@ -47,46 +51,24 @@ public class RecipeController {
         model.addAttribute("recipes", recipes);
         return "profile";
     }
-}
 
 
-
-
-
-
-
-
-/*
-@Controller
-@RequestMapping("/recipes")
-public class RecipeController {
-
-    private final RecipeService recipeService;
-
-    @Autowired
-    public RecipeController(RecipeService recipeService) {
-        this.recipeService = recipeService;
-    }
-
-    @GetMapping("/add")
-    public String showAddRecipeForm(Model model) {
-        model.addAttribute("recipe", new RecipeEntity());
-        return "add-recipe";
-    }
-
-    @PostMapping("/save")
-    public String saveRecipe(@ModelAttribute RecipeEntity recipe) {
-        recipeService.saveRecipe(recipe);
-        return "redirect:/profile";
-    }
-
-    @GetMapping("/profile")
-    public String showProfile(Model model) {
-        List<RecipeEntity> recipes = recipeService.getAllRecipes();
-        model.addAttribute("recipes", recipes);
-        return "profile";
+    @GetMapping("/recipe/{id}")
+    public String showRecipeDetails(@PathVariable("id") Long id, Model model) {
+        // Hämta receptet från databasen med det givna ID:t
+        Optional<RecipeEntity> optionalRecipe = recipeRepository.findById(id);
+        if (optionalRecipe.isPresent()) {
+            RecipeEntity recipe = optionalRecipe.get();
+            // Lägg till receptet i modellen för att visa det i vyn
+            model.addAttribute("recipe", recipe);
+            return "recipe-details"; // Returnera namnet på Thymeleaf-sidan för detaljerad vy
+        } else {
+            // Om receptet inte hittas, omdirigera till en felhanteringssida eller visa ett felmeddelande
+            return "error";
+        }
     }
 }
 
 
-*/
+
+

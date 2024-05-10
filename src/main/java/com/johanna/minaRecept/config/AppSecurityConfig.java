@@ -33,7 +33,7 @@ public class AppSecurityConfig {
        return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/","/hash","/home","/login", "/register", "/profile","/add-recipe").permitAll() // Tillåt åtkomst till startsida och registreringssida utan inloggning
+                        .requestMatchers("/","/hash","/home","/login", "/register", "/profile","/add-recipe","/recipe-details").permitAll() // Tillåt åtkomst till startsida och registreringssida utan inloggning
                         .anyRequest().authenticated() // Alla andra begäranden kräver autentisering
                 )
                 .formLogin(formLogin -> formLogin.loginPage("/login") // Ange URL för inloggningssida

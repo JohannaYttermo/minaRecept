@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptdetaljer</title>
+    <!-- Lägg till Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-to-br from-pink-200 to-purple-400 flex flex-col items-center justify-center min-h-screen">
+
+<div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-8 text-center text-purple-900" th:text="${recipe.title}">Recepttitel</h1>
+    <h2 class="text-lg font-semibold mb-4">Ingredienser</h2>
+    <ul class="list-disc pl-4">
+        <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}"></li>
+    </ul>
+    <h2 class="text-lg font-semibold mt-4 mb-4">Gör såhär</h2>
+    <p th:text="${recipe.instructions}">Instruktioner här...</p>
+</div>
+<a th:href="@{/profile}" class="block text-center text-purple-600 hover:text-purple-700">Tillbaka till profilsidan</a>
+
+</body>
+
+</html>
+
