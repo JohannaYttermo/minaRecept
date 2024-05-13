@@ -9,7 +9,8 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends JpaRepository<RecipeEntity, Long> {
 
-    List<RecipeEntity> findByTitleContaining(String keyword); ;
+    List<RecipeEntity> findByTitleContaining(String keyword);
+
 
 }
 

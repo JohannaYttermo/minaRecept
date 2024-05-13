@@ -24,6 +24,8 @@ public class RecipeEntity {
     @NotEmpty
     private String instructions;
 
+
+
     public RecipeEntity() {}
 
     public RecipeEntity(String title, List<String> ingredients, String instructions) {

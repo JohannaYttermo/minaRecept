@@ -14,7 +14,6 @@ import java.util.Optional;
 
 
 @Controller
-/*@RequestMapping("/recipes")*/
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
@@ -39,16 +38,15 @@ public class RecipeController {
         return "redirect:/profile";
     }
 
+    @PostMapping("/deleteRecipe")
+    public String deleteRecipe(@ModelAttribute("recipeId") Long recipeId) {
 
-  /*  @PostMapping("/add-recipe")
-    public String saveRecipe(@RequestParam String title, @RequestParam List<String> ingredients, @RequestParam String instructions) {
-        RecipeEntity recipe;
-        recipe = new RecipeEntity(title, ingredients, instructions);
-        recipeRepository.save(recipe);
-        System.out.println("recept sparas i databas");
-        return "redirect:/profile";
+        recipeRepository.deleteById(recipeId);
+
+        return "redirect:profile";
     }
-*/
+
+
 
     @GetMapping("/profile")
     public String showProfile(Model model) {
@@ -56,6 +54,7 @@ public class RecipeController {
         model.addAttribute("recipes", recipes);
         return "profile";
     }
+
 
 
     @GetMapping("/recipe/{id}")
