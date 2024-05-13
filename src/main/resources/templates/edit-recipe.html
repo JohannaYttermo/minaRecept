@@ -24,10 +24,15 @@
         <input name="title" type="text" placeholder="Titel..." id="title" class="w-full border-gray-300 rounded-md p-2 mb-4" th:value="${recipe.title}" required>
 
         <label for="ingredients" class="block mb-4 text-purple-900">Ingredienser</label>
+        <!-- Loopa igenom befintliga ingredienser och fyll i formulärfält -->
         <div id="ingredient-container">
-            <!-- Loopa igenom befintliga ingredienser och fyll i formulärfält -->
-            <textarea th:each="ingredient, iterStat : ${recipe.ingredients}" th:value="${ingredient}" class="w-full border-gray-300 rounded-md p-2 mb-4" th:id="'ingredient-' + ${iterStat.index}" th:name="'ingredients[' + ${iterStat.index} + ']'" required></textarea>
+            <label>
+                <textarea th:each="ingredient, iterStat : ${recipe.ingredients}" th:text="${ingredient}" th:field="*{recipe.ingredients[__${iterStat.index}__]}" class="w-full border-gray-300 rounded-md p-2 mb-4" required></textarea>
+            </label>
         </div>
+
+
+
 
         <button type="button" onclick="addIngredient()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md mb-4 transition duration-300 ease-in-out">Lägg till ingrediens</button>
 

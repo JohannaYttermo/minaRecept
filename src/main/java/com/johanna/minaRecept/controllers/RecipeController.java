@@ -35,6 +35,7 @@ public class RecipeController {
         if (optionalRecipe.isPresent()) {
             RecipeEntity recipe = optionalRecipe.get();
             model.addAttribute("recipe", recipe);
+
             return "edit-recipe";
         } else {
             return "error";
