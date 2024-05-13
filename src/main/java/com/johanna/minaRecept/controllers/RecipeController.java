@@ -23,30 +23,44 @@ public class RecipeController {
         this.recipeRepository = recipeRepository;
     }
 
-
     @GetMapping("/add-recipe")
     public String showAddRecipeForm(Model model) {
         model.addAttribute("recipe", new RecipeEntity());
         return "add-recipe";
     }
 
+    @PostMapping("/edit-recipe/{id}")
+    public String showEditRecipeForm(@PathVariable("id") Long id, Model model) {
+        Optional<RecipeEntity> optionalRecipe = recipeRepository.findById(id);
+        if (optionalRecipe.isPresent()) {
+            RecipeEntity recipe = optionalRecipe.get();
+            model.addAttribute("recipe", recipe);
+            return "edit-recipe";
+        } else {
+            return "error";
+        }
+    }
 
-    @PostMapping("/add-recipe")
+    @PostMapping("/save-recipe")
     public String saveRecipe(@ModelAttribute("recipe") RecipeEntity recipe) {
         recipeRepository.save(recipe);
-        System.out.println("recept sparas i databas");
         return "redirect:/profile";
     }
 
-    @PostMapping("/deleteRecipe")
-    public String deleteRecipe(@ModelAttribute("recipeId") Long recipeId) {
-
-        recipeRepository.deleteById(recipeId);
-
-        return "redirect:profile";
+    @PostMapping("/update-recipe/{id}")
+    public String updateRecipe(@PathVariable("id") Long id, @ModelAttribute("recipe") RecipeEntity updatedRecipe) {
+        // Sätt ID för det uppdaterade receptet
+        updatedRecipe.setId(id);
+        recipeRepository.save(updatedRecipe);
+        return "redirect:/profile";
     }
 
 
+    @PostMapping("/delete-recipe")
+    public String deleteRecipe(@ModelAttribute("recipeId") Long recipeId) {
+        recipeRepository.deleteById(recipeId);
+        return "redirect:/profile";
+    }
 
     @GetMapping("/profile")
     public String showProfile(Model model) {
@@ -55,24 +69,17 @@ public class RecipeController {
         return "profile";
     }
 
-
-
     @GetMapping("/recipe/{id}")
     public String showRecipeDetails(@PathVariable("id") Long id, Model model) {
-        // Hämta receptet från databasen med det givna ID:t
         Optional<RecipeEntity> optionalRecipe = recipeRepository.findById(id);
         if (optionalRecipe.isPresent()) {
             RecipeEntity recipe = optionalRecipe.get();
-            // Lägg till receptet i modellen för att visa det i vyn
             model.addAttribute("recipe", recipe);
-            return "recipe-details"; // Returnera namnet på Thymeleaf-sidan för detaljerad vy
+            return "recipe-details";
         } else {
-            // Om receptet inte hittas, omdirigera till en felhanteringssida eller visa ett felmeddelande
             return "error";
         }
     }
-
-
 }
 
 

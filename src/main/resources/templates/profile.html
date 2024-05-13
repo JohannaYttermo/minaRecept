@@ -22,7 +22,9 @@
     </form>
 
     <!-- Lista över recept -->
-    <div class="border-t border-gray-300 py-4">
+    <!-- Lista över recept -->
+    <!-- Lista över recept -->
+    <div th:if="${not #lists.isEmpty(recipes)}" class="border-t border-gray-300 py-4">
         <h2 class="text-xl font-bold mb-2">Dina recept</h2>
         <!-- Loopa igenom och visa recept dynamiskt -->
         <div class="flex flex-col space-y-4">
@@ -33,6 +35,8 @@
             <!-- Slut på loop -->
         </div>
     </div>
+
+
 
     <!-- Knapp för att visa alla recept -->
     <button class="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="window.location.href='/all-recipes'">Visa alla dina recept</button>
