@@ -63,7 +63,7 @@ public class RecipeController {
     public String showProfile(Model model, Principal principal) {
         String username = principal.getName();
         model.addAttribute("username",username);
-        List<RecipeEntity> recipes = recipeRepository.findAll();
+        List<RecipeEntity> recipes = recipeRepository.findTop3ByOrderByCreatedAtDesc();
         model.addAttribute("recipes", recipes);
         return "profile";
     }
@@ -79,7 +79,17 @@ public class RecipeController {
             return "error";
         }
     }
+
+    @GetMapping("/all-recipes")
+    public String showAllRecipes(Model model) {
+        List<RecipeEntity> allRecipes = recipeRepository.findAllByOrderByTitleAsc();
+        model.addAttribute("allRecipes", allRecipes);
+        return "all-recipes";
+    }
+
+
 }
+
 
 
 

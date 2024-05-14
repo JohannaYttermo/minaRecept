@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alla recept</title>
+    <!-- Lägg till Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+
+<body class="bg-gradient-to-br from-pink-200 to-purple-400 flex flex-col items-center justify-center min-h-screen">
+
+<div class="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-8 text-center text-purple-900">Alla recept</h1>
+
+    <!-- Lista över alla recept -->
+    <div th:if="${not #lists.isEmpty(allRecipes)}" class="border-t border-gray-300 py-4">
+        <h2 class="text-xl font-bold mb-2">Dina recept</h2>
+        <!-- Loopa igenom och visa recept dynamiskt -->
+        <div class="grid grid-cols-1 gap-4 justify-center items-center">
+            <!-- Loopa igenom recept här -->
+            <div th:each="recipe : ${allRecipes}" class="bg-gray-50 p-4 rounded-md shadow-md w-3/4 h-auto flex justify-center items-center mx-auto">
+                <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="block text-lg font-semibold mb-2" th:text="${recipe.title}">Titel här</a>
+            </div>
+            <!-- Slut på loop -->
+        </div>
+    </div>
+
+    <!-- Tillbaka till profilsidan knapp -->
+    <button class="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="window.location.href='/profile'">Tillbaka till profilsidan</button>
+
+    <!-- Lägg till nytt recept knapp -->
+    <button class="w-full mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="window.location.href='/add-recipe'">Lägg till nytt recept</button>
+
+    <!-- Logga ut länk -->
+    <a th:href="@{/logout-page}" class="block mt-4 text-center text-blue-500">Logga ut</a>
+</div>
 
 </body>
+
 </html>
+
+
+
+
+
+

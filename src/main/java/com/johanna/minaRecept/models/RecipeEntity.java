@@ -3,6 +3,7 @@ package com.johanna.minaRecept.models;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,12 +24,18 @@ public class RecipeEntity {
     @NotEmpty
     private String instructions;
 
+
+    private LocalDateTime createdAt;
+
+
     public RecipeEntity() {}
 
-    public RecipeEntity(String title, List<String> ingredients, String instructions) {
+    public RecipeEntity(String title, List<String> ingredients, String instructions, LocalDateTime createdAt) {
         this.title = title;
         this.ingredients = ingredients;
         this.instructions = instructions;
+        this.createdAt = createdAt;
+
     }
 
     public Long getId() {
@@ -61,5 +68,13 @@ public class RecipeEntity {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
