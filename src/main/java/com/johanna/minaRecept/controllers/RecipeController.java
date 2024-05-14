@@ -5,10 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.johanna.minaRecept.models.RecipeEntity;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +34,6 @@ public class RecipeController {
         if (optionalRecipe.isPresent()) {
             RecipeEntity recipe = optionalRecipe.get();
             model.addAttribute("recipe", recipe);
-
             return "edit-recipe";
         } else {
             return "error";
@@ -50,12 +48,10 @@ public class RecipeController {
 
     @PostMapping("/update-recipe/{id}")
     public String updateRecipe(@PathVariable("id") Long id, @ModelAttribute("recipe") RecipeEntity updatedRecipe) {
-        // Sätt ID för det uppdaterade receptet
         updatedRecipe.setId(id);
         recipeRepository.save(updatedRecipe);
         return "redirect:/profile";
     }
-
 
     @PostMapping("/delete-recipe")
     public String deleteRecipe(@ModelAttribute("recipeId") Long recipeId) {
@@ -64,7 +60,9 @@ public class RecipeController {
     }
 
     @GetMapping("/profile")
-    public String showProfile(Model model) {
+    public String showProfile(Model model, Principal principal) {
+        String username = principal.getName();
+        model.addAttribute("username",username);
         List<RecipeEntity> recipes = recipeRepository.findAll();
         model.addAttribute("recipes", recipes);
         return "profile";
@@ -82,6 +80,7 @@ public class RecipeController {
         }
     }
 }
+
 
 
 

@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-
 @Entity
 @Table(name = "recipes")
 public class RecipeEntity {
@@ -23,8 +22,6 @@ public class RecipeEntity {
 
     @NotEmpty
     private String instructions;
-
-
 
     public RecipeEntity() {}
 
@@ -50,7 +47,7 @@ public class RecipeEntity {
         this.title = title;
     }
 
-    public @NotEmpty(message = "Lägg till ingredienser") List<String> getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 

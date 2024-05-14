@@ -12,5 +12,6 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Long> {
     List<RecipeEntity> findByTitleContaining(String keyword);
 
 
+
 }
 
