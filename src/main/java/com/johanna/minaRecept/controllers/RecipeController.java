@@ -87,6 +87,13 @@ public class RecipeController {
         return "all-recipes";
     }
 
+    @GetMapping("/search-recipe")
+    public String searchRecipe(@RequestParam("keyword") String keyword, Model model) {
+        List<RecipeEntity> searchResults = recipeRepository.findByTitleContaining(keyword);
+        model.addAttribute("recipes", searchResults);
+        return "search-results";
+    }
+
 
 }
 

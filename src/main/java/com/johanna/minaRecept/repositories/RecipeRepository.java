@@ -19,6 +19,5 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Long> {
 
 
 
-
 }
 

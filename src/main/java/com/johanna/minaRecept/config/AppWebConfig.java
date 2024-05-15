@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
             registry.addViewController("/add-recipe").setViewName("add-recipe");
             registry.addViewController("/edit-recipe").setViewName("edit-recipe");
             registry.addViewController("/recipe-details").setViewName("recipe-details");
+            registry.addViewController("/search-results").setViewName("search-results");
             registry.addViewController("/logout").setViewName("logout");
             registry.addViewController("/logout-page").setViewName("logout-page");
         }
