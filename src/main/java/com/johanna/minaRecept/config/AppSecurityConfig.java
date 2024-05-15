@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,31 +31,34 @@ public class AppSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       return http
+        return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/","/hash","/home","/login", "/register", "/profile","/add-recipe","/recipe-details","/edit-recipe","/search-results").permitAll() // Tillåt åtkomst till startsida och registreringssida utan inloggning
+                        .requestMatchers("/", "/hash", "/home", "/login", "/register", "/profile", "/add-recipe", "/recipe-details", "/edit-recipe", "/search-results").permitAll() // Tillåt åtkomst till startsida och registreringssida utan inloggning
                         .anyRequest().authenticated() // Alla andra begäranden kräver autentisering
                 )
-                .formLogin(formLogin -> formLogin.loginPage("/login") // Ange URL för inloggningssida
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login") // Ange URL för inloggningssida
                         .failureHandler(new CustomAuthenticationFailureHandler())
-                        .defaultSuccessUrl("/profile", true))//
-
-                .logout(logout -> logout
-                        .logoutUrl("/logout-page") // Ange URL för utloggning
-                        .clearAuthentication(true)
-                        .deleteCookies("JSESSIONID" , "remember-me")
-                        .logoutSuccessUrl("/home")
+                        .defaultSuccessUrl("/profile", true)
                 )
-
+                .logout(logout -> logout
+                        .logoutUrl("/logout") // Ange URL för utloggning
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID", "remember-me")
+                        .logoutSuccessUrl("/home")
+                        .addLogoutHandler((request, response, authentication) -> {// Rensa sessionen när användaren loggar ut
+                            request.getSession().invalidate();
+                        })
+                )
                 .rememberMe(rememberMe -> rememberMe
-                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
-                .key("someSecurityKey")
-                .userDetailsService(userEntityDetailsService)
-                .rememberMeParameter("remember-me"))
-                .authenticationProvider(daoAuthenticationProvider())    // Tell Spring to use our implementation (Password & Service)
+                        .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
+                        .key("someSecurityKey")
+                        .userDetailsService(userEntityDetailsService)
+                        .rememberMeParameter("remember-me")
+                )
+                .authenticationProvider(daoAuthenticationProvider()) // Tell Spring to use our implementation (Password & Service)
                 .build();
-
     }
 
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -66,6 +70,10 @@ public class AppSecurityConfig {
         return provider;
     }
 
-
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
 }
+
 

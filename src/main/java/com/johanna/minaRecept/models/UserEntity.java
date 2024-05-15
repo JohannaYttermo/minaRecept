@@ -6,9 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.List;
 
 
-    @Entity
+@Entity
     @Table(name = "\"user\"")
     public class UserEntity implements UserDetails {
 
@@ -27,6 +28,9 @@ import java.util.Collection;
         private boolean credentialsNonExpired;
         @Enumerated(EnumType.STRING)
         private Role role;
+
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+        private List<RecipeEntity> recipes;
 
         public UserEntity() {}
         public UserEntity(String username, String password, Role role,
@@ -106,6 +110,14 @@ import java.util.Collection;
         public void setRole(Role role) {
             this.role = role;
         }
+
+    public List<RecipeEntity> getRecipes() {
+        return recipes;
     }
+
+    public void setRecipes(List<RecipeEntity> recipes) {
+        this.recipes = recipes;
+    }
+}
 
 

@@ -1,6 +1,8 @@
 package com.johanna.minaRecept.controllers;
 
+import com.johanna.minaRecept.models.UserEntity;
 import com.johanna.minaRecept.repositories.RecipeRepository;
+import com.johanna.minaRecept.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,12 @@ import java.util.Optional;
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public RecipeController(RecipeRepository recipeRepository) {
+    public RecipeController(RecipeRepository recipeRepository, UserRepository userRepository) {
         this.recipeRepository = recipeRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/add-recipe")
@@ -41,7 +45,10 @@ public class RecipeController {
     }
 
     @PostMapping("/save-recipe")
-    public String saveRecipe(@ModelAttribute("recipe") RecipeEntity recipe) {
+    public String saveRecipe(@ModelAttribute("recipe") RecipeEntity recipe, Principal principal) {
+        String username = principal.getName();
+        UserEntity user = userRepository.findByUsername(username);
+        recipe.setUser(user);
         recipeRepository.save(recipe);
         return "redirect:/profile";
     }
@@ -59,14 +66,6 @@ public class RecipeController {
         return "redirect:/profile";
     }
 
-    @GetMapping("/profile")
-    public String showProfile(Model model, Principal principal) {
-        String username = principal.getName();
-        model.addAttribute("username",username);
-        List<RecipeEntity> recipes = recipeRepository.findTop3ByOrderByCreatedAtDesc();
-        model.addAttribute("recipes", recipes);
-        return "profile";
-    }
 
     @GetMapping("/recipe/{id}")
     public String showRecipeDetails(@PathVariable("id") Long id, Model model) {
@@ -81,18 +80,47 @@ public class RecipeController {
     }
 
     @GetMapping("/all-recipes")
-    public String showAllRecipes(Model model) {
-        List<RecipeEntity> allRecipes = recipeRepository.findAllByOrderByTitleAsc();
-        model.addAttribute("allRecipes", allRecipes);
+    public String showAllRecipes(Principal principal, Model model) {
+        String username = principal.getName();
+        UserEntity user = userRepository.findByUsername(username);
+
+        if (user != null) {
+            List<RecipeEntity> userRecipes = user.getRecipes();
+            if (userRecipes != null) {
+                model.addAttribute("recipes", userRecipes);
+            } else {
+                model.addAttribute("errorMessage", "Inga recept hittades för användaren.");
+            }
+        } else {
+            model.addAttribute("errorMessage", "Användaren kunde inte hittas.");
+        }
+
         return "all-recipes";
     }
 
+
+
+
     @GetMapping("/search-recipe")
-    public String searchRecipe(@RequestParam("keyword") String keyword, Model model) {
-        List<RecipeEntity> searchResults = recipeRepository.findByTitleContaining(keyword);
-        model.addAttribute("recipes", searchResults);
-        return "search-results";
+    public String searchRecipes(@RequestParam("keyword") String keyword, Principal principal, Model model) {
+        // Hämta inloggad användares användarnamn
+        String username = principal.getName();
+
+        // Hämta den inloggade användaren från UserRepository
+        UserEntity user = userRepository.findByUsername(username);
+
+        if (user != null) {
+            // Sök efter recept som matchar sökordet och tillhör den inloggade användaren
+            List<RecipeEntity> userRecipes = recipeRepository.findByTitleContaining(keyword);
+
+            // Lägg till recepten i modellen för att visas på sidan
+            model.addAttribute("recipes", userRecipes);
+            model.addAttribute("keyword", keyword); // Lägg även till sökordet i modellen för att visa det på sidan
+        }
+
+        return "search-results"; // Returnera sidan för sökresultat
     }
+
 
 
 }

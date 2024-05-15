@@ -16,6 +16,8 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Long> {
 
     List<RecipeEntity> findAllByOrderByTitleAsc();
 
+    List<RecipeEntity> findTop3ByUserUsernameOrderByCreatedAtDesc(String username);
+
 
 
 
