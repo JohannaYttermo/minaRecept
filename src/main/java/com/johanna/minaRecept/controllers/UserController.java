@@ -93,22 +93,27 @@ public class UserController {
         UserEntity user = userRepository.findByUsername(username);
 
         if (user != null) {
+            // Visa välkomsthälsning oavsett om användaren har recept eller inte
+            model.addAttribute("username", username);
+
             // Hämta de senaste tre recepten för den inloggade användaren
             List<RecipeEntity> userRecipes = recipeRepository.findTop3ByUserUsernameOrderByCreatedAtDesc(username);
 
             if (!userRecipes.isEmpty()) {
-                // Lägg till recepten i modellen för att visas på profilsidan
+                // Om användaren har recept, lägg till dem i modellen för att visas på profilsidan
                 model.addAttribute("recipes", userRecipes);
-                model.addAttribute("username", username); // Lägg även till användarnamnet i modellen för att visa det på sidan
             } else {
-                model.addAttribute("errorMessage", "Inga recept hittades för användaren.");
+                // Om användaren inte har några recept, lägg till ett meddelande om detta i modellen
+                model.addAttribute("noRecipesMessage", "Inga recept hittades för användaren.");
             }
         } else {
+            // Om användaren inte hittas, lägg till ett felmeddelande i modellen
             model.addAttribute("errorMessage", "Användaren kunde inte hittas.");
         }
 
         return "profile"; // Returnera profilsidan
     }
+
 
 
     @PostMapping("/logout")
