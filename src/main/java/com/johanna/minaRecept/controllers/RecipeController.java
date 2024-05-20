@@ -53,12 +53,28 @@ public class RecipeController {
         return "redirect:/profile";
     }
 
+
     @PostMapping("/update-recipe/{id}")
-    public String updateRecipe(@PathVariable("id") Long id, @ModelAttribute("recipe") RecipeEntity updatedRecipe) {
-        updatedRecipe.setId(id);
-        recipeRepository.save(updatedRecipe);
-        return "redirect:/profile";
+    public String updateRecipe(@PathVariable("id") Long id, @ModelAttribute("recipe") RecipeEntity updatedRecipe, Principal principal) {
+        Optional<RecipeEntity> optionalRecipe = recipeRepository.findById(id);
+        if (optionalRecipe.isPresent()) {
+            RecipeEntity existingRecipe = optionalRecipe.get();
+
+            // Behåll användaren från det befintliga receptet
+            updatedRecipe.setUser(existingRecipe.getUser());
+
+            // Sätt ID på det uppdaterade receptet
+            updatedRecipe.setId(id);
+
+            // Spara det uppdaterade receptet
+            recipeRepository.save(updatedRecipe);
+
+            return "redirect:/profile";
+        } else {
+            return "error";
+        }
     }
+
 
     @PostMapping("/delete-recipe")
     public String deleteRecipe(@ModelAttribute("recipeId") Long recipeId) {
